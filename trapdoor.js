@@ -1,0 +1,3 @@
+class Trapdoor extends Block {
+    
+}

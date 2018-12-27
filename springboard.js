@@ -1,0 +1,3 @@
+class Springboard extends Block {
+
+}
