@@ -15,6 +15,8 @@ class Block {
         this.g = g;
 
         this.strokeWeight = 3;
+
+        this.type = BLOCK_TYPE.NORMAL;
     }
 
     update() {

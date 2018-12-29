@@ -7,4 +7,8 @@ const WIDTH = 600,
         STATIC: 0,
         DYNAMIC: 1,
         PUSHABLE: 2
+    },
+    BLOCK_TYPE = {
+        NORMAL: 0,
+        LIFT: 1
     };

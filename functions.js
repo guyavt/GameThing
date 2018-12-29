@@ -1,28 +1,37 @@
+let xrecheck = false,
+    yrecheck = false;
+
 function collide(block, other) {
+    let lastx = block.x - block.vx, lasty = block.y - block.vy;
+    let ox = other.x, oy = other.y;
+
     if (
-        block.x < other.x + other.w &&
-        block.x + block.w > other.x &&
-        block.y < other.y + other.h &&
+        block.x < ox + other.w &&
+        block.x + block.w > ox &&
+        block.y < oy + other.h &&
         block.y + block.h > other.y
     ) {
-        let lastx = block.x - block.vx,
-            lasty = block.y - block.vy;
         if (
-            lastx < other.x + other.w &&
-            lastx + block.w > other.x &&
-            block.y < other.y + other.h &&
+            lastx < ox + other.w &&
+            lastx + block.w > ox &&
+            block.y < oy + other.h &&
             block.y + block.h > other.y
         ) {
             if (
-                block.x < other.x + other.w &&
-                block.x + block.w > other.x &&
-                lasty < other.y + other.h &&
+                block.x < ox + other.w &&
+                block.x + block.w > ox &&
+                lasty < oy + other.h &&
                 lasty + block.h > other.y
             ) {
-                if (other.xstate != BLOCK_STATE.STATIC) {
+                if (other.xstate != BLOCK_STATE.STATIC && !xrecheck) {
+                    xrecheck = true;
+                    yrecheck = false;
                     block.x += other.vx;
                     collide(block, other);
-                } else if (other.ystate != BLOCK_STATE.STATIC) {
+                }
+                if (other.ystate != BLOCK_STATE.STATIC && !yrecheck) {
+                    xrecheck = false;
+                    yrecheck = true;
                     block.y += other.vy;
                     collide(block, other);
                 }
@@ -31,62 +40,60 @@ function collide(block, other) {
 
                 if (other.ystate == BLOCK_STATE.STATIC) {
                     if (block.vy < 0) {
-                        block.y -= (block.y - (other.y + other.h));
+                        block.y -= (block.y - (oy + other.h));
                     } else if (block.vy > 0) {
-                        block.y += (other.y - (block.y + block.h));
+                        block.y += (oy - (block.y + block.h));
                         block.onground = true;
                     }
 
                     block.vy = 0;
                 } else if (other.ystate == BLOCK_STATE.PUSHABLE) {
-                    other.y += block.vy - other.vy;
+                    oy += block.vy - other.vy;
 
                     if (block.vy < 0) {
-                        block.y -= (block.y - (other.y + other.h)) - other.vy;
+                        block.y -= (block.y - (oy + other.h)) - other.vy;
                     } else if (block.vy > 0) {
-                        block.y += (other.y - (block.y + block.h)) + other.vy;
+                        block.y += (oy - (block.y + block.h)) + other.vy;
                         block.onground = true;
                     }
                 } else {
                     if (block.vy < 0) {
-                        block.y -= (block.y - (other.y + other.h)) - other.vy;
+                        block.y -= (block.y - (oy + other.h)) - other.vy;
                     } else if (block.vy > 0) {
-                        block.y += (other.y - (block.y + block.h)) + other.vy;
+                        block.y += (oy - (block.y + block.h)) + other.vy;
                         block.onground = true;
                     }
 
                     block.vy = 0;
                 }
 
-                if (other.xstate == BLOCK_STATE.DYNAMIC && block.onground) block.x += other.vx;
+                if (other.xstate == BLOCK_STATE.DYNAMIC && block.onground) block.ax = other.vx;
             }
         } else {
             block.x -= block.vx;
 
             if (other.xstate == BLOCK_STATE.STATIC) {
                 if (block.vx < 0) {
-                    block.x -= (block.x - (other.x + other.w));
+                    block.x -= (block.x - (ox + other.w));
                 } else if (block.vx > 0) {
-                    block.x += (other.x - (block.x + block.w));
+                    block.x += (ox - (block.x + block.w));
                 }
 
                 block.vx = 0;
             } else if (other.xstate == BLOCK_STATE.PUSHABLE) {
-                other.x += block.vx - other.vx;
+                ox += block.vx - other.vx;
 
                 if (block.vx < 0) {
-                    block.x -= (block.x - (other.x + other.w)) - other.vx;
+                    block.x -= (block.x - (ox + other.w)) - other.vx;
                 } else if (block.vx > 0) {
-                    block.x += (other.x - (block.x + block.w)) + other.vx;
+                    block.x += (ox - (block.x + block.w)) + other.vx;
                 }
             } else {
                 if (block.vx < 0) {
-                    block.x -= (block.x - (other.x + other.w)) - other.vx;
+                    block.x -= (block.x - (ox + other.w)) - other.vx;
                 } else if (block.vx > 0) {
-                    block.x += (other.x - (block.x + block.w)) + other.vx;
+                    block.x += (ox - (block.x + block.w)) + other.vx;
                 }
-
-                if (block.onground) block.x += other.vx;
 
                 block.vx = 0;
             }

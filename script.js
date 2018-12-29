@@ -10,12 +10,12 @@ let can = document.getElementById(`board`),
     up = false,
     down = false,
     walls = {
-        left: new Block(0, 0, 20, HEIGHT, BLOCK_STATE.STATIC, BLOCK_STATE.STATIC),
+        left: new Block(0, 0, 20, HEIGHT),
         right: new Block(WIDTH - 20, 0, 20, HEIGHT, BLOCK_STATE.STATIC, BLOCK_STATE.STATIC),
-        top: new Block(0, 0, WIDTH, 20, BLOCK_STATE.STATIC, BLOCK_STATE.STATIC),
-        bottom: new Block(0, HEIGHT - 20, WIDTH, 20, BLOCK_STATE.STATIC, BLOCK_STATE.STATIC)
+        top: new Block(0, 0, WIDTH, 20),
+        bottom: new Block(0, HEIGHT - 20, WIDTH, 20)
     },
-    obj = new Lift(WIDTH / 2, HEIGHT / 2, 100, 20, 1);
+    obj = new Lift(WIDTH / 2, HEIGHT - 150, 100, 20, 1, -1, [100, WIDTH - 100], [100, HEIGHT - 100], BLOCK_STATE.DYNAMIC, BLOCK_STATE.DYNAMIC);
 
 
 window.addEventListener(`load`, e => {
