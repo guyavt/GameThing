@@ -6,8 +6,12 @@ class Block {
         this.xacc = 0;
         this.yacc = 0;
 
+        this.xdir = this.xvel != 0 ? (this.xvel / Math.abs(this.xvel)) : 0;
+        this.ydir = this.yvel != 0 ? (this.yvel / Math.abs(this.yvel)) : 0;
+
         this.xstate = xstate;
         this.ystate = ystate;
+
         this.onground = false;
 
         this.bb = new BoundingBox(x, y, w, h);
@@ -20,10 +24,10 @@ class Block {
     }
 
     update() {
-        if (this.ystate == BLOCK_STATE.DYNAMIC && this.g) this.ay = GRAVITY;
+        if (this.ystate == BLOCK_STATE.DYNAMIC && this.g) this.ay += GRAVITY;
         this.vx += this.ax;
         this.vy += this.ay;
-        if (this.vy > 10) this.vy = 10;
+        // if (this.vy > 10) this.vy = 10;
 
         if (this.xstate != BLOCK_STATE.STATIC) this.x += this.vx;
         if (this.ystate != BLOCK_STATE.STATIC) this.y += this.vy;
@@ -32,6 +36,9 @@ class Block {
         this.ay = 0;
 
         this.onground = false;
+
+        this.xdir = this.vx != 0 ? (this.vx / Math.abs(this.vx)) : 0;
+        this.ydir = this.vy != 0 ? (this.vy / Math.abs(this.vy)) : 0;
 
         if (!(this.xstate == BLOCK_STATE.STATIC && this.ystate == BLOCK_STATE.STATIC)) {
             for (let i = BLOCKS.length - 1; i > 0; i--) {
@@ -42,6 +49,8 @@ class Block {
                 }
             }
         }
+
+        this.bb.updateVertices();
 
         this.lateUpdate();
     }

@@ -30,4 +30,13 @@ class BoundingBox {
         ctx.fillText(`${ this.x }; ${ this.y + this.h }`, this.x, this.y + this.h + 15);
         ctx.fillText(`${ this.x + this.w }; ${ this.y + this.h }`, this.x + this.w, this.y + this.h + 15);
     }
+
+    updateVertices() {
+        this.vertices = {
+            topLeft: [this.x, this.y],
+            topRight: [this.x + this.w, this.y],
+            bottomLeft: [this.x, this.y + this.h],
+            bottomRight: [this.x + this.w, this.y + this.h]
+        };
+    }
 }

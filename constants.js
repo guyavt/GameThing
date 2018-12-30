@@ -10,5 +10,6 @@ const WIDTH = 600,
     },
     BLOCK_TYPE = {
         NORMAL: 0,
-        LIFT: 1
+        LIFT: 1,
+        SPRINGBOARD: 2
     };

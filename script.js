@@ -15,7 +15,7 @@ let can = document.getElementById(`board`),
         top: new Block(0, 0, WIDTH, 20),
         bottom: new Block(0, HEIGHT - 20, WIDTH, 20)
     },
-    obj = new Lift(WIDTH / 2, HEIGHT - 150, 100, 20, 1, -1, [100, WIDTH - 100], [100, HEIGHT - 100], BLOCK_STATE.DYNAMIC, BLOCK_STATE.DYNAMIC);
+    obj = new Springboard(WIDTH / 2, HEIGHT - 50, 60, 10, 10);
 
 
 window.addEventListener(`load`, e => {
@@ -61,24 +61,23 @@ function update() {
     else if (!left) player.vx = 0;
     if (up && player.onground) player.vy = -10;
 
-    // if (up) player.vy = -3;
-    // else if (!down) player.vy = 0;
-    // if (down) player.vy = 3;
-    // else if (!up) player.vy = 0;
-
-    // console.log(player.onground);
     player.update();
 
     for (let b of BLOCKS) {
         if (b != player)
             b.update();
     }
-    // console.log(player.onground);
 }
 
 function render() {
     ctx.clearRect(0, 0, WIDTH, HEIGHT);
+    ctx.save();
+    ctx.translate(-player.x / 2 + WIDTH / 4, -player.y / 2 + HEIGHT / 4);
     for (let b of BLOCKS) {
-        b.render();
+        if (b != player)
+            b.render();
     }
+
+    player.render();
+    ctx.restore();
 }
