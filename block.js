@@ -41,7 +41,7 @@ class Block {
         this.ydir = this.vy != 0 ? (this.vy / Math.abs(this.vy)) : 0;
 
         if (!(this.xstate == BLOCK_STATE.STATIC && this.ystate == BLOCK_STATE.STATIC)) {
-            for (let i = BLOCKS.length - 1; i > 0; i--) {
+            for (let i = BLOCKS.length - 1; i >= 0; i--) {
                 let other = BLOCKS[i];
 
                 if (other != this) {

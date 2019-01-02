@@ -3,7 +3,7 @@ let can = document.getElementById(`board`),
     fps = 60,
     frc = 0,
     ivl,
-    player = new Block(WIDTH / 2, HEIGHT / 2- 200, 50, 50, BLOCK_STATE.DYNAMIC, BLOCK_STATE.DYNAMIC),
+    player = new Block(WIDTH / 2, HEIGHT / 2- 200, 50, 50, BLOCK_STATE.PUSHABLE, BLOCK_STATE.DYNAMIC),
     debug = false,
     left = false,
     right = false,
@@ -15,7 +15,7 @@ let can = document.getElementById(`board`),
         top: new Block(0, 0, WIDTH, 20),
         bottom: new Block(0, HEIGHT - 20, WIDTH, 20)
     },
-    obj = new Springboard(WIDTH / 2, HEIGHT - 50, 60, 10, 10);
+    obj = new Lift(WIDTH / 2, HEIGHT - 50, 60, 10, 1, 0, [50, WIDTH - 50], [null, null], BLOCK_STATE.DYNAMIC, BLOCK_STATE.STATIC);
 
 
 window.addEventListener(`load`, e => {
@@ -62,7 +62,6 @@ function update() {
     if (up && player.onground) player.vy = -10;
 
     player.update();
-
     for (let b of BLOCKS) {
         if (b != player)
             b.update();
