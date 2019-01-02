@@ -15,7 +15,7 @@ let can = document.getElementById(`board`),
         top: new Block(0, 0, WIDTH, 20),
         bottom: new Block(0, HEIGHT - 20, WIDTH, 20)
     },
-    obj = new Trapdoor(WIDTH / 2, HEIGHT - 50, 60, 10, 10);
+    obj = new Springboard(WIDTH / 2, HEIGHT - 50, 60, 10, 10);
 
 
 window.addEventListener(`load`, e => {
