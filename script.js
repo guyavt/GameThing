@@ -14,8 +14,7 @@ let can = document.getElementById(`board`),
         right: new Block(WIDTH - 20, 0, 20, HEIGHT, BLOCK_STATE.STATIC, BLOCK_STATE.STATIC),
         top: new Block(0, 0, WIDTH, 20),
         bottom: new Block(0, HEIGHT - 20, WIDTH, 20)
-    },
-    obj = new Trapdoor(WIDTH / 2, HEIGHT - 50, 60, 10, 10);
+    };
 
 
 window.addEventListener(`load`, e => {
@@ -23,7 +22,6 @@ window.addEventListener(`load`, e => {
     can.height = HEIGHT;
 
     BLOCKS.push(player);
-    BLOCKS.push(obj);
 
     for (let w of Object.values(walls)) {
         BLOCKS.push(w);
